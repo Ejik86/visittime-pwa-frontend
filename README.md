@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Данила Мастер — Онлайн-запись (PWA)
 
-## Getting Started
+Современный Frontend для системы онлайн-записи барбершопа "Данила Мастер". 
+Дизайн выполнен в премиальном темном стиле с серо-зелеными акцентами, реализован как Progressive Web App (PWA) и готов к статическому размещению на Cloudflare Pages.
 
-First, run the development server:
+## Стэк технологий
+- Next.js 15 (App Router)
+- TypeScript
+- Tailwind CSS v4
+- Zustand
+- PWA (Service Worker + Manifest)
 
+## Запуск проекта локально
+
+Убедитесь, что у вас установлен Node.js.
+
+1. Установите зависимости:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Запустите сервер для разработки:
+```bash
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Проект будет доступен по адресу: http://localhost:3000
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Как редактировать услуги и время
 
-## Learn More
+В текущей версии все данные мокируются в файле `src/lib/api.ts`:
+- **Услуги**: редактируйте массив `MOCK_SERVICES` в файле `api.ts`.
+- **Слоты времени**: логика генерации доступного времени находится в функции `getTimeSlots`. Для изменения рабочих часов поправьте цикл `for (let h = 10; h <= 20; h++)`.
 
-To learn more about Next.js, take a look at the following resources:
+## Деплой на Cloudflare Pages
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Проект настроен на **Static Export** (`output: "export"` в конфигурации Next.js), что идеально подходит для бесплатного хостинга на Cloudflare Pages.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Шаги для деплоя:**
+1. Зайдите в [Cloudflare Dashboard](https://dash.cloudflare.com)
+2. Перейдите в раздел **Workers & Pages** -> **Create application** -> **Pages** -> **Connect to Git**
+3. Выберите репозиторий `visittime-pwa-frontend`. *(Если репозиторий не виден, перейдите в настройки GitHub -> Applications -> Cloudflare Pages и выдайте доступ к этому репозиторию).*
+4. Нажмите **Begin setup** и укажите:
+   - Framework preset: **Next.js (Static HTML Export)**
+   - Build command: `npm run build`
+   - Build output directory: `out`
+5. Нажмите **Save and Deploy**. Cloudflare автоматически соберет и опубликует ваш проект.
 
-## Deploy on Vercel
+## Акцентный цвет (Бренд)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Все цвета (dark theme, accent gray-green) настраиваются в файле `src/app/globals.css` в блоке `@theme`.
+Для замены акцентного цвета отредактируйте:
+```css
+  --color-accent: #6F8F86;
+  --color-accent-2: #5D7A72;
+```
