@@ -4,6 +4,7 @@ import "./globals.css";
 import { ToastProvider } from "@/components/ui/Toast";
 import { BottomNavigation } from "@/components/ui/BottomNavigation";
 import { PwaRegistrar } from "@/components/PwaRegistrar";
+import { AppGate } from "@/components/AppGate";
 
 const font = Outfit({ subsets: ["latin"] });
 
@@ -36,12 +37,15 @@ export default function RootLayout({
       <body className={`${font.className} bg-[var(--color-bg)] text-[var(--color-text)] antialiased`}>
         <PwaRegistrar />
         <ToastProvider>
-          <main className="mx-auto min-h-screen max-w-md bg-[var(--color-bg)] pb-24 shadow-2xl shadow-black/50 relative">
-            {children}
-          </main>
-          <BottomNavigation />
+          <AppGate>
+            <main className="mx-auto max-w-md min-h-screen bg-[var(--color-bg)] shadow-2xl shadow-black/50 relative">
+              {children}
+            </main>
+            <BottomNavigation />
+          </AppGate>
         </ToastProvider>
       </body>
     </html>
   );
 }
+

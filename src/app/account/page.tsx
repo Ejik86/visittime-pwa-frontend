@@ -4,20 +4,16 @@ import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import { Appointment } from "@/lib/types";
-import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { AppointmentCard } from "@/components/booking/AppointmentCard";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { LogOut, CalendarDays, Archive } from "lucide-react";
+import { useAuthStore } from "@/store/authStore";
 import { useBookingStore } from "@/store/bookingStore";
 
 export default function AccountPage() {
     const router = useRouter();
-    const [phone, setPhone] = useState("");
-    const [code, setCode] = useState("");
-    const [step, setStep] = useState<"phone" | "code" | "auth">("phone");
-    const [loading, setLoading] = useState(false);
-
+    const { logout, phone } = useAuthStore();
     const [appointments, setAppointments] = useState<Appointment[]>([]);
     const [loadingAppts, setLoadingAppts] = useState(true);
     const [activeTab, setActiveTab] = useState<"upcoming" | "history">("upcoming");
@@ -30,24 +26,8 @@ export default function AccountPage() {
     }, []);
 
     useEffect(() => {
-        if (step === "auth") {
-            loadAppointments();
-        }
-    }, [step, loadAppointments]);
-
-    const handlePhoneSubmit = async () => {
-        if (phone.length < 11) return;
-        setLoading(true);
-        await api.requestPhoneCode(phone);
-        setLoading(false);
-        setStep("code");
-    };
-
-    const handleCodeSubmit = () => {
-        if (code.length !== 4) return;
-        setLoadingAppts(true);
-        setStep("auth");
-    };
+        loadAppointments();
+    }, [loadAppointments]);
 
     const handleCancel = async (id: string) => {
         await api.cancelAppointment(id);
@@ -63,60 +43,6 @@ export default function AccountPage() {
         router.push("/book");
     };
 
-    // ─── Login screens ─────────────────────────────────────────────
-    if (step !== "auth") {
-        return (
-            <div className="flex h-screen flex-col items-center justify-center px-8 pb-24 bg-[var(--color-bg)]">
-                <img src="/images/logo2.png" alt="Данила Мастер" className="h-12 object-contain mb-8 opacity-80" />
-
-                <h2 className="mb-2 text-2xl font-semibold text-[var(--color-text)] tracking-tight">Личный кабинет</h2>
-                <p className="mb-8 text-center text-sm text-[var(--color-muted)] font-light max-w-[260px]">
-                    Войдите, чтобы управлять своими записями
-                </p>
-
-                <div className="w-full bg-[var(--color-surface)] rounded-2xl p-6 border border-[var(--color-border)]">
-                    {step === "phone" ? (
-                        <div className="flex flex-col gap-4">
-                            <Input
-                                type="tel"
-                                placeholder="+7 (999) 000-00-00"
-                                value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
-                            />
-                            <Button disabled={phone.length < 11 || loading} onClick={handlePhoneSubmit}>
-                                {loading ? "Отправка..." : "Получить код"}
-                            </Button>
-                        </div>
-                    ) : (
-                        <div className="flex flex-col gap-4">
-                            <p className="text-sm text-[var(--color-muted)] text-center font-light">
-                                Код отправлен на {phone}
-                            </p>
-                            <Input
-                                type="tel"
-                                maxLength={4}
-                                placeholder="····"
-                                className="text-center text-3xl tracking-[0.5em] font-bold"
-                                value={code}
-                                onChange={(e) => setCode(e.target.value.replace(/\D/g, ''))}
-                                autoFocus
-                            />
-                            <Button disabled={code.length !== 4} onClick={handleCodeSubmit}>
-                                Войти
-                            </Button>
-                            <button
-                                onClick={() => setStep("phone")}
-                                className="text-sm text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors text-center"
-                            >
-                                Изменить номер
-                            </button>
-                        </div>
-                    )}
-                </div>
-            </div>
-        );
-    }
-
     // ─── Auth screens ──────────────────────────────────────────────
     const upcoming = appointments.filter(a => a.status === 'upcoming');
     const history = appointments.filter(a => a.status === 'past' || a.status === 'cancelled');
@@ -127,7 +53,7 @@ export default function AccountPage() {
             <div className="shrink-0 flex h-14 items-center justify-between px-5 bg-[var(--color-bg)]/90 backdrop-blur-xl border-b border-[var(--color-border)]">
                 <img src="/images/logo2.png" alt="Данила Мастер" className="h-5 object-contain opacity-75" />
                 <button
-                    onClick={() => { setStep("phone"); setCode(""); setPhone(""); }}
+                    onClick={() => logout()}
                     className="flex items-center gap-1.5 text-xs text-[var(--color-muted)] hover:text-white transition-colors"
                 >
                     <LogOut className="h-3.5 w-3.5" />
