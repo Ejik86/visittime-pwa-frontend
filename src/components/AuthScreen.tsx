@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ChevronLeft, User } from "lucide-react";
 import { api } from "@/lib/api";
 import { useAuthStore } from "@/store/authStore";
+import { hapticMedium, hapticSuccess, hapticSelection, hapticLight } from "@/lib/haptic";
 
 type AuthStep = "phone" | "code";
 
@@ -33,6 +34,7 @@ export function AuthScreen() {
 
     const handlePhoneSubmit = async () => {
         if (!phoneReady) return;
+        hapticMedium();
         setLoading(true);
         await api.requestPhoneCode(rawPhone);
         setLoading(false);
@@ -48,6 +50,7 @@ export function AuthScreen() {
     };
 
     const handleCodeDigit = (digit: string, idx: number) => {
+        hapticSelection();
         const updated = [...code];
         updated[idx] = digit;
         setCode(updated);
@@ -64,8 +67,8 @@ export function AuthScreen() {
     const handleCodeSubmit = async (codeStr: string) => {
         if (codeStr.length !== 4) return;
         setLoading(true);
-        // Mock validation
         await new Promise(r => setTimeout(r, 600));
+        hapticSuccess();
         setAuthenticated(rawPhone);
         setLoading(false);
     };

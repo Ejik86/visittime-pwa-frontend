@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, CalendarDays, User } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { hapticSelection } from "@/lib/haptic";
 
 export function BottomNavigation() {
     const pathname = usePathname();
@@ -25,6 +26,7 @@ export function BottomNavigation() {
                         <Link
                             key={link.href}
                             href={link.href}
+                            onClick={hapticSelection}
                             className={cn(
                                 "flex w-16 flex-col items-center justify-center gap-1 transition-all duration-300 active:scale-95",
                                 isActive ? "text-[var(--color-accent)]" : "text-[var(--color-muted)] hover:text-[var(--color-text)]"

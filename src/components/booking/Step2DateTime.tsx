@@ -9,6 +9,7 @@ import { useBookingStore } from "@/store/bookingStore";
 import { Skeleton } from "../ui/Skeleton";
 import { Button } from "../ui/Button";
 import { cn } from "@/lib/utils";
+import { hapticSelection } from "@/lib/haptic";
 
 export function Step2DateTime({ onNext }: { onNext: () => void }) {
     const { date: selectedDate, setDate, timeSlot, setTimeSlot } = useBookingStore();
@@ -47,6 +48,7 @@ export function Step2DateTime({ onNext }: { onNext: () => void }) {
                             <button
                                 key={day.toISOString()}
                                 onClick={() => {
+                                    hapticSelection();
                                     setDate(day);
                                     setTimeSlot("");
                                     setLoading(true);
@@ -90,7 +92,7 @@ export function Step2DateTime({ onNext }: { onNext: () => void }) {
                                 <button
                                     key={slot.time}
                                     disabled={!slot.available}
-                                    onClick={() => setTimeSlot(slot.time)}
+                                    onClick={() => { hapticSelection(); setTimeSlot(slot.time); }}
                                     className={cn(
                                         "flex h-11 items-center justify-center rounded-xl border text-sm font-medium transition-all duration-200 smooth-press",
                                         isSelected

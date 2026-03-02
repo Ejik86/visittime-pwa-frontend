@@ -1,5 +1,6 @@
 import { Service } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { hapticLight } from "@/lib/haptic";
 
 interface ServiceCardProps {
     service: Service;
@@ -13,7 +14,7 @@ export function ServiceCard({ service, isSelected, isLoyal, onClick }: ServiceCa
 
     return (
         <div
-            onClick={onClick}
+            onClick={() => { hapticLight(); onClick?.(); }}
             className={cn(
                 "flex cursor-pointer flex-row items-center overflow-hidden rounded-xl transition-all duration-200 smooth-press border h-[90px]",
                 isSelected

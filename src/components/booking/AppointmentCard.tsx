@@ -5,6 +5,7 @@ import { format, parseISO } from "date-fns";
 import { ru } from "date-fns/locale";
 import { useState } from "react";
 import { Calendar, Clock, AlertTriangle } from "lucide-react";
+import { hapticError, hapticMedium, hapticLight } from "@/lib/haptic";
 
 interface AppointmentCardProps {
     appointment: Appointment;
@@ -20,8 +21,9 @@ export function AppointmentCard({ appointment, onCancel, onReschedule }: Appoint
     const [confirming, setConfirming] = useState(false);
     const [cancelling, setCancelling] = useState(false);
 
-    const handleCancelClick = () => setConfirming(true);
+    const handleCancelClick = () => { hapticLight(); setConfirming(true); };
     const handleCancelConfirm = async () => {
+        hapticError();
         setCancelling(true);
         await onCancel?.(appointment.id);
         setCancelling(false);
@@ -37,8 +39,8 @@ export function AppointmentCard({ appointment, onCancel, onReschedule }: Appoint
                         {appointment.serviceName}
                     </h3>
                     <span className={`text-[9px] font-bold uppercase tracking-widest px-2 py-1 rounded-sm ml-3 shrink-0 ${isActive ? 'bg-[var(--color-accent)]/15 text-[var(--color-accent)] border border-[var(--color-accent)]/30' :
-                            isCancelled ? 'bg-[var(--color-surface-2)] text-[var(--color-muted)] border border-[var(--color-border)]' :
-                                'bg-[var(--color-surface-2)] text-[var(--color-muted)] border border-[var(--color-border)]'
+                        isCancelled ? 'bg-[var(--color-surface-2)] text-[var(--color-muted)] border border-[var(--color-border)]' :
+                            'bg-[var(--color-surface-2)] text-[var(--color-muted)] border border-[var(--color-border)]'
                         }`}>
                         {isActive ? 'Активно' : isCancelled ? 'Отменено' : 'Завершено'}
                     </span>
@@ -71,7 +73,7 @@ export function AppointmentCard({ appointment, onCancel, onReschedule }: Appoint
                     </button>
                     <div className="w-px bg-[var(--color-border)]" />
                     <button
-                        onClick={() => onReschedule?.(appointment.id)}
+                        onClick={() => { hapticMedium(); onReschedule?.(appointment.id); }}
                         className="flex-1 py-3 text-sm text-[var(--color-accent)] hover:bg-[var(--color-accent)]/5 transition-colors font-medium"
                     >
                         Перенести
