@@ -1,11 +1,11 @@
 import { Service, TimeSlot, Appointment } from './types';
 
 const MOCK_SERVICES: Service[] = [
-    { id: '1', name: 'Стрижка мужская', description: 'Классическая техника, подбор формы', price: 800, priceRegular: 1000, durationMinutes: 45 },
-    { id: '2', name: 'С переходом от нуля', description: 'Fade, плавный переход, четкие линии', price: 1200, priceRegular: 1500, durationMinutes: 60 },
-    { id: '3', name: 'Стрижка под насадки', description: 'Быстро, аккуратно, одной-двумя насадками', price: 600, priceRegular: 800, durationMinutes: 30 },
-    { id: '4', name: 'Оформление бороды', description: 'Коррекция формы, работа с контуром', price: 600, priceRegular: 800, durationMinutes: 30 },
-    { id: '5', name: 'Стрижка + борода', description: 'Полный комплекс процедур', price: 1600, priceRegular: 2000, durationMinutes: 90 },
+    { id: '1', name: 'Стрижка мужская', description: 'Классическая техника, подбор формы', price: 800, priceRegular: 1000, durationMinutes: 45, imageUrl: '/images/service_1.jpg' },
+    { id: '2', name: 'С переходом от нуля', description: 'Fade, плавный переход, четкие линии', price: 1200, priceRegular: 1500, durationMinutes: 60, imageUrl: '/images/service_2.jpg' },
+    { id: '3', name: 'Стрижка под насадки', description: 'Быстро, аккуратно, одной-двумя насадками', price: 600, priceRegular: 800, durationMinutes: 30, imageUrl: '/images/service_3.jpg' },
+    { id: '4', name: 'Оформление бороды', description: 'Коррекция формы, работа с контуром', price: 600, priceRegular: 800, durationMinutes: 30, imageUrl: '/images/service_4.jpg' },
+    { id: '5', name: 'Стрижка + борода', description: 'Полный комплекс процедур', price: 1600, priceRegular: 2000, durationMinutes: 90, imageUrl: '/images/service_5.jpg' },
 ];
 
 const MOCK_APPOINTMENTS: Appointment[] = [

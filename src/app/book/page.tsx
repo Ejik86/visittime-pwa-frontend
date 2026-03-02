@@ -35,11 +35,14 @@ export default function BookPage() {
                         <ChevronLeft className="h-6 w-6" />
                     </button>
                 ) : <div className="w-10" />}
-                <h1 className="flex-1 text-center text-sm font-bold tracking-[0.2em] uppercase text-[var(--color-text)]">
-                    {step === 1 && "Услуга"}
-                    {step === 2 && "Дата и Время"}
-                    {step === 3 && "Контакты"}
-                </h1>
+                <div className="flex-1 flex flex-col items-center justify-center">
+                    <img src="/images/logo2.png" alt="Danila Master" className="h-6 object-contain mb-1 opacity-80" />
+                    <h1 className="text-center text-[10px] font-bold tracking-[0.2em] uppercase text-[var(--color-text)]">
+                        {step === 1 && "Услуга"}
+                        {step === 2 && "Дата и Время"}
+                        {step === 3 && "Контакты"}
+                    </h1>
+                </div>
                 <div className="w-10" />
             </div>
 

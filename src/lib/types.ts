@@ -5,6 +5,7 @@ export interface Service {
     price: number; // Цена для постоянных
     priceRegular: number; // Цена для новых
     durationMinutes: number;
+    imageUrl?: string;
 }
 
 export interface TimeSlot {
