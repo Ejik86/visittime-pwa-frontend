@@ -30,51 +30,54 @@ function vibrateAndroid(style: HapticStyle) {
 }
 
 /**
- * iOS silent AudioContext trick:
- * Creates a 1ms zero-amplitude oscillator burst.
- * On some iOS versions this triggers the system taptic engine.
- * Works best when the PWA is opened from Home Screen.
+ * iOS native Taptic Engine trick (iOS 17.4+):
+ * iOS Safari now supports `<input type="checkbox" switch>`.
+ * Toggling this specific input type fires a real system haptic tick.
+ * We can programmatically click a hidden label connected to it.
  */
-let _audioCtx: AudioContext | null = null;
-
 function vibrateIos(style: HapticStyle) {
-    try {
-        if (!_audioCtx) {
-            _audioCtx = new (window.AudioContext || (window as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext!)();
-        }
-        const ctx = _audioCtx;
-        if (ctx.state === "suspended") ctx.resume();
+    if (typeof document === 'undefined') return;
 
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain);
-        gain.connect(ctx.destination);
+    let testInput = document.getElementById('ios-haptic-input') as HTMLInputElement | null;
+    let testLabel = document.getElementById('ios-haptic-label') as HTMLLabelElement | null;
 
-        // Different frequency "feel" per style
-        const freqMap: Record<HapticStyle, number> = {
-            selection: 0,
-            light: 0,
-            medium: 0,
-            heavy: 0,
-            success: 0,
-            error: 0,
-        };
-        osc.frequency.value = freqMap[style];
-        gain.gain.value = 0; // Silent — just tickles the audio pipeline
+    if (!testInput || !testLabel) {
+        testInput = document.createElement('input');
+        testInput.type = 'checkbox';
+        testInput.setAttribute('switch', ''); // The magic attribute
+        testInput.id = 'ios-haptic-input';
+        // Must be in DOM and "visible" enough to not be optimized out
+        testInput.style.position = 'fixed';
+        testInput.style.left = '-9999px';
+        testInput.style.opacity = '0';
 
-        const now = ctx.currentTime;
-        const durMap: Record<HapticStyle, number> = {
-            selection: 0.005,
-            light: 0.01,
-            medium: 0.02,
-            heavy: 0.035,
-            success: 0.04,
-            error: 0.05,
-        };
-        osc.start(now);
-        osc.stop(now + durMap[style]);
-    } catch {
-        // Silently fail
+        testLabel = document.createElement('label');
+        testLabel.id = 'ios-haptic-label';
+        testLabel.htmlFor = 'ios-haptic-input';
+        testLabel.style.position = 'fixed';
+        testLabel.style.left = '-9999px';
+
+        document.body.appendChild(testInput);
+        document.body.appendChild(testLabel);
+    }
+
+    const trigger = () => testLabel?.click();
+
+    // Different patterns using the single haptic tick
+    trigger(); // Base tick
+
+    if (style === 'medium') {
+        setTimeout(trigger, 40);
+    } else if (style === 'heavy') {
+        setTimeout(trigger, 40);
+        setTimeout(trigger, 80);
+    } else if (style === 'success') {
+        setTimeout(trigger, 80);
+        setTimeout(trigger, 200);
+    } else if (style === 'error') {
+        setTimeout(trigger, 50);
+        setTimeout(trigger, 100);
+        setTimeout(trigger, 150);
     }
 }
 
