@@ -49,6 +49,6 @@ jobs:
           script: |
             sleep 10
             echo "🏥 Checking frontend..."
-            curl -fsS --max-time 10 http://localhost/ > /dev/null && echo "✅ Frontend OK" || echo "⚠️ Frontend not responding"
+            curl -fsS --max-time 10 https://app.danila-master-ukhta.ru/ > /dev/null && echo "✅ Frontend OK" || echo "⚠️ Frontend not responding on HTTPS"
             echo "🏥 Checking /health..."
-            curl -fsS --max-time 10 http://localhost/health > /dev/null && echo "✅ Health OK" || echo "⚠️ Health endpoint not responding"
+            curl -fsS --max-time 10 https://app.danila-master-ukhta.ru/health > /dev/null && echo "✅ Health OK" || echo "⚠️ Health endpoint not responding"

@@ -28,7 +28,7 @@ npm run dev
 ### 1. Требования к серверу
 - Ubuntu 22.04+
 - Docker и Docker Compose v2
-- Домен, направленный A-записью на IP сервера (Cloudflare DNS → «DNS only», без прокси)
+- Домен (поддомен) с A-записью на IP сервера. Если DNS управляется через Cloudflare — режим «DNS only» (без прокси)
 
 ### 2. Установка Docker (если не установлен)
 ```bash
@@ -65,7 +65,7 @@ git clone https://github.com/Ejik86/visittime-pwa-frontend.git .
 ```bash
 cp .env.example .env
 nano .env
-# Указать DOMAIN=your-domain.ru
+# Указать DOMAIN=app.danila-master-ukhta.ru
 ```
 
 ### 6. Получение SSL-сертификата (Let's Encrypt)
@@ -79,7 +79,7 @@ mkdir -p certbot-webroot
 sudo apt install -y certbot
 
 # Получить сертификат (домен должен указывать на этот сервер)
-sudo certbot certonly --standalone -d YOUR_DOMAIN --agree-tos --email your@email.com --non-interactive
+sudo certbot certonly --standalone -d app.danila-master-ukhta.ru --agree-tos --email your@email.com --non-interactive
 ```
 
 ### 7. Запуск
@@ -89,8 +89,8 @@ docker compose -f docker-compose.prod.yml up -d --build
 
 ### 8. Проверка
 ```bash
-curl -f https://YOUR_DOMAIN/
-curl -f https://YOUR_DOMAIN/health
+curl -f https://app.danila-master-ukhta.ru/
+curl -f https://app.danila-master-ukhta.ru/health
 ```
 
 ### 9. Автозапуск после перезагрузки
