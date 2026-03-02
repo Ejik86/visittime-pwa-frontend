@@ -1,9 +1,11 @@
 import { Service, TimeSlot, Appointment } from './types';
 
 const MOCK_SERVICES: Service[] = [
-    { id: '1', name: 'Стрижка', description: 'Классическая мужская стрижка', price: 1500, durationMinutes: 60 },
-    { id: '2', name: 'Оформление бороды', description: 'Стрижка и моделирование', price: 800, durationMinutes: 30 },
-    { id: '3', name: 'Комплекс', description: 'Стрижка + Борода', price: 2000, durationMinutes: 90 },
+    { id: '1', name: 'Стрижка мужская', description: 'Классическая техника, подбор формы', price: 800, priceRegular: 1000, durationMinutes: 45 },
+    { id: '2', name: 'С переходом от нуля', description: 'Fade, плавный переход, четкие линии', price: 1200, priceRegular: 1500, durationMinutes: 60 },
+    { id: '3', name: 'Стрижка под насадки', description: 'Быстро, аккуратно, одной-двумя насадками', price: 600, priceRegular: 800, durationMinutes: 30 },
+    { id: '4', name: 'Оформление бороды', description: 'Коррекция формы, работа с контуром', price: 600, priceRegular: 800, durationMinutes: 30 },
+    { id: '5', name: 'Стрижка + борода', description: 'Полный комплекс процедур', price: 1600, priceRegular: 2000, durationMinutes: 90 },
 ];
 
 const MOCK_APPOINTMENTS: Appointment[] = [

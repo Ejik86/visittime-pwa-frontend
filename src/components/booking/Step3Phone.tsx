@@ -5,6 +5,7 @@ import { useBookingStore } from "@/store/bookingStore";
 import { api } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/Button";
+import { Input } from "../ui/Input";
 
 export function Step3Phone() {
     const { phone, setPhone, service, date, timeSlot } = useBookingStore();
@@ -38,38 +39,49 @@ export function Step3Phone() {
     return (
         <div className="flex flex-col animate-in fade-in slide-in-from-right-4 duration-500 pb-safe pb-40">
             <div className="mb-12">
-                <h3 className="mb-4 text-sm font-bold tracking-wide text-[var(--color-accent)]">КОНТАКТЫ</h3>
-                <p className="mb-8 text-sm text-[var(--color-muted)] leading-relaxed">
-                    Укажите номер телефона для подтверждения записи по СМС и получения напоминаний.
+                <h3 className="mb-4 text-[12px] font-medium tracking-[0.2em] text-[var(--color-accent)] uppercase">КОНТАКТЫ</h3>
+                <p className="mb-10 text-[15px] text-[var(--color-muted)] font-light leading-relaxed">
+                    Для подтверждения записи мы отправим вам СМС-код. Постоянным клиентам — специальные условия.
                 </p>
 
-                <div className="relative">
-                    <input
+                <div className="space-y-6">
+                    <Input
                         value={phone}
                         onChange={handlePhoneChange}
                         placeholder="+7 (___) ___-__-__"
-                        className="flex h-16 w-full rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] px-6 text-2xl font-bold tracking-widest text-[var(--color-text)] transition-all duration-300 focus:border-[var(--color-accent)] focus:ring-1 focus:ring-[var(--color-accent)] focus:outline-none"
+                        className="h-16 text-2xl font-medium tracking-tight"
                         type="tel"
                         autoFocus
                     />
-                </div>
 
-                <label className="flex items-start gap-4 mt-8 cursor-pointer group">
-                    <input type="checkbox" defaultChecked className="mt-1 w-5 h-5 rounded border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-accent)] focus:ring-[var(--color-accent)]" />
-                    <span className="text-xs text-[var(--color-muted)] group-hover:text-gray-300 transition-colors">
-                        Соглашаюсь на обработку персональных данных и получение сервисных СМС или сообщений в мессенджерах.
-                    </span>
-                </label>
+                    <label className="flex items-start gap-4 mt-8 cursor-pointer group">
+                        <div className="relative flex items-center">
+                            <input
+                                type="checkbox"
+                                defaultChecked
+                                className="peer h-5 w-5 cursor-pointer appearance-none rounded border border-[var(--color-border)] bg-[var(--color-surface)] checked:bg-[var(--color-accent)] transition-all"
+                            />
+                            <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 peer-checked:opacity-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                </svg>
+                            </div>
+                        </div>
+                        <span className="text-[13px] text-[var(--color-muted)] transition-colors font-light leading-tight">
+                            Соглашаюсь на обработку персональных данных и получение сервисных СМС.
+                        </span>
+                    </label>
+                </div>
             </div>
 
-            <div className="fixed bottom-0 left-0 w-full px-6 z-40 bg-gradient-to-t from-[var(--color-bg)] via-[var(--color-bg)] to-transparent pt-12 pb-8 pointer-events-none">
+            <div className="fixed bottom-0 left-0 w-full px-6 z-40 bg-gradient-to-t from-[var(--color-bg)] via-[var(--color-bg)]/90 to-transparent pt-16 pb-12 pointer-events-none">
                 <div className="mx-auto max-w-md pointer-events-auto">
                     <Button
                         disabled={!isValid || loading}
                         onClick={handleSubmit}
-                        className="w-full h-16 text-lg"
+                        className="w-full"
                     >
-                        {loading ? "Подтверждаем..." : "Подтвердить запись"}
+                        {loading ? "Подтверждаем..." : "Записаться"}
                     </Button>
                 </div>
             </div>

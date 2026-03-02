@@ -38,7 +38,7 @@ export function Step2DateTime({ onNext }: { onNext: () => void }) {
     return (
         <div className="flex flex-col animate-in fade-in slide-in-from-right-4 duration-500 pb-safe pb-40">
             <div className="mb-10">
-                <h3 className="mb-4 text-sm font-bold tracking-wide text-[var(--color-accent)]">ДАТА</h3>
+                <h3 className="mb-4 text-[12px] font-medium tracking-[0.2em] text-[var(--color-accent)] uppercase">ДАТА</h3>
                 <div className="flex gap-3 overflow-x-auto pb-4 no-scrollbar -mx-6 px-6 relative">
                     {days.map((day) => {
                         const isSelected = selectedDate && isSameDay(day, selectedDate);
@@ -51,16 +51,16 @@ export function Step2DateTime({ onNext }: { onNext: () => void }) {
                                     setLoading(true);
                                 }}
                                 className={cn(
-                                    "flex h-[80px] w-[64px] shrink-0 flex-col items-center justify-center rounded-2xl border transition-all duration-300 smooth-press",
+                                    "flex h-[80px] w-[64px] shrink-0 flex-col items-center justify-center rounded-xl border transition-all duration-300 smooth-press",
                                     isSelected
-                                        ? "border-[var(--color-accent)] bg-[var(--color-surface)] text-[var(--color-accent)] ring-1 ring-[var(--color-accent)]/50 shadow-[0_0_15px_rgba(111,143,134,0.15)]"
-                                        : "border-[var(--color-border)] bg-[var(--color-surface-2)] text-[var(--color-muted)] hover:bg-[var(--color-surface)] hover:text-[var(--color-text)]"
+                                        ? "border-[var(--color-accent)] bg-[var(--color-surface)] text-[var(--color-accent)]"
+                                        : "border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-muted)] hover:border-[var(--color-muted)]"
                                 )}
                             >
-                                <span className={cn("text-[10px] uppercase tracking-wider mb-2", isSelected ? "text-[var(--color-accent)] font-bold" : "text-[var(--color-muted)] font-medium")}>
+                                <span className={cn("text-[10px] uppercase tracking-wider mb-1 font-light", isSelected ? "text-[var(--color-accent)]" : "text-[var(--color-muted)]")}>
                                     {format(day, 'E', { locale: ru })}
                                 </span>
-                                <span className={cn("text-2xl font-black leading-none", isSelected && "drop-shadow-[0_0_8px_rgba(111,143,134,0.3)]")}>
+                                <span className={cn("text-2xl font-medium leading-none tracking-tighter")}>
                                     {format(day, 'd')}
                                 </span>
                             </button>
@@ -70,7 +70,7 @@ export function Step2DateTime({ onNext }: { onNext: () => void }) {
             </div>
 
             <div className="mb-12">
-                <h3 className="mb-4 text-sm font-bold tracking-wide text-[var(--color-accent)]">ВРЕМЯ</h3>
+                <h3 className="mb-4 text-[12px] font-medium tracking-[0.2em] text-[var(--color-accent)] uppercase">ВРЕМЯ</h3>
                 {loading ? (
                     <div className="grid grid-cols-4 gap-3">
                         {[...Array(8)].map((_, i) => (
@@ -87,11 +87,11 @@ export function Step2DateTime({ onNext }: { onNext: () => void }) {
                                     disabled={!slot.available}
                                     onClick={() => setTimeSlot(slot.time)}
                                     className={cn(
-                                        "flex h-14 items-center justify-center rounded-xl border text-sm font-bold transition-all duration-300 smooth-press",
+                                        "flex h-14 items-center justify-center rounded-xl border text-sm font-medium transition-all duration-300 smooth-press",
                                         isSelected
-                                            ? "border-[var(--color-accent)] bg-[var(--color-accent)] text-[#0B0F12] shadow-[0_0_15px_rgba(111,143,134,0.3)] scale-[1.02]"
-                                            : "border-[var(--color-border)] bg-[var(--color-surface-2)] hover:bg-[var(--color-surface)] text-[var(--color-text)]",
-                                        !slot.available && "opacity-20 border-transparent bg-[var(--color-surface)] text-[var(--color-muted)] hover:bg-[var(--color-surface)] cursor-not-allowed scale-100"
+                                            ? "border-[var(--color-accent)] bg-[var(--color-accent)] text-[var(--color-text)]"
+                                            : "border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)] hover:border-[var(--color-muted)]",
+                                        !slot.available && "opacity-10 grayscale border-transparent bg-[var(--color-surface)] text-[var(--color-muted)] cursor-not-allowed"
                                     )}
                                 >
                                     {slot.time}
@@ -102,13 +102,12 @@ export function Step2DateTime({ onNext }: { onNext: () => void }) {
                 )}
             </div>
 
-            <div className="fixed bottom-0 left-0 w-full px-6 z-40 bg-gradient-to-t from-[var(--color-bg)] via-[var(--color-bg)] to-transparent pt-12 pb-8 pointer-events-none">
+            <div className="fixed bottom-0 left-0 w-full px-6 z-40 bg-gradient-to-t from-[var(--color-bg)] via-[var(--color-bg)]/90 to-transparent pt-16 pb-12 pointer-events-none">
                 <div className="mx-auto max-w-md pointer-events-auto">
                     <Button
                         disabled={!selectedDate || !timeSlot}
                         onClick={onNext}
-                        className="w-full h-16"
-                        size="lg"
+                        className="w-full"
                     >
                         Продолжить
                     </Button>

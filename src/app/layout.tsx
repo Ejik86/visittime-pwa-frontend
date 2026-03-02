@@ -1,28 +1,28 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Outfit } from "next/font/google";
 import "./globals.css";
 import { ToastProvider } from "@/components/ui/Toast";
 import { BottomNavigation } from "@/components/ui/BottomNavigation";
 import { PwaRegistrar } from "@/components/PwaRegistrar";
 
-const font = Inter({ subsets: ["cyrillic", "latin"] });
+const font = Outfit({ subsets: ["latin"] });
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: "#0B0F12",
+  themeColor: "#0F1113",
 };
 
 export const metadata: Metadata = {
-  title: "Данила Мастер | Онлайн-запись",
-  description: "Онлайн-запись в премиальный мужской салон Данила Мастер",
+  title: "Данила Мастер | Кабинет частного мастера",
+  description: "Премиальный сервис мужских стрижек в Ухте",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Danilo",
+    title: "Данила Мастер",
   },
 };
 

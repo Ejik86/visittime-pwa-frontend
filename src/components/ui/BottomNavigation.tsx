@@ -31,10 +31,10 @@ export function BottomNavigation() {
                             )}
                         >
                             <Icon
-                                className={cn("h-6 w-6 transition-all duration-300", isActive && "drop-shadow-[0_0_8px_rgba(111,143,134,0.4)]")}
+                                className={cn("h-6 w-6 transition-all duration-300")}
                                 strokeWidth={isActive ? 2.5 : 2}
                             />
-                            <span className={cn("text-[10px] uppercase tracking-wider", isActive ? "font-bold" : "font-medium")}>
+                            <span className={cn("text-[10px] uppercase tracking-wider", isActive ? "font-medium" : "font-normal")}>
                                 {link.label}
                             </span>
                         </Link>

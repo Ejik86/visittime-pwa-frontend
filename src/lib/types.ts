@@ -2,7 +2,8 @@ export interface Service {
     id: string;
     name: string;
     description: string;
-    price: number;
+    price: number; // Цена для постоянных
+    priceRegular: number; // Цена для новых
     durationMinutes: number;
 }
 
