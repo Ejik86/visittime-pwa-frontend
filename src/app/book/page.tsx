@@ -23,24 +23,25 @@ export default function BookPage() {
     const handleNext = () => setStep((s) => Math.min(s + 1, 3));
     const handleBack = () => setStep((s) => Math.max(s - 1, 1));
 
+    const stepLabels = ["Услуга", "Дата и время", "Подтверждение"];
+
     return (
         <div className="flex h-screen flex-col bg-[var(--color-bg)] overflow-hidden">
-            {/* Header */}
+            {/* Header — clean, logo текстовый */}
             <div className="shrink-0 flex h-14 items-center px-4 bg-[var(--color-bg)]/90 backdrop-blur-xl border-b border-[var(--color-border)]">
                 {step > 1 ? (
                     <button
                         onClick={handleBack}
-                        className="flex h-9 w-9 items-center justify-center rounded-full text-[var(--color-muted)] transition-colors hover:bg-[var(--color-surface)] hover:text-white smooth-press"
+                        className="flex h-9 w-9 items-center justify-center rounded-full text-[var(--color-muted)] hover:bg-[var(--color-surface)] transition-colors smooth-press"
                     >
                         <ChevronLeft className="h-5 w-5" />
                     </button>
                 ) : <div className="w-9" />}
+
                 <div className="flex-1 flex flex-col items-center justify-center">
-                    <img src="/images/logo2.png" alt="Данила Мастер" className="h-5 object-contain opacity-75 mb-0.5" />
-                    <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[var(--color-muted)]">
-                        {step === 1 && "Услуга"}
-                        {step === 2 && "Дата и Время"}
-                        {step === 3 && "Контакты"}
+                    <span className="text-base font-semibold text-[var(--color-text)] tracking-tight">Данила Мастер</span>
+                    <span className="text-[10px] text-[var(--color-muted)] uppercase tracking-[0.15em] font-medium">
+                        {stepLabels[step - 1]}
                     </span>
                 </div>
                 <div className="w-9" />
@@ -54,8 +55,8 @@ export default function BookPage() {
                 />
             </div>
 
-            {/* Scrollable content area — stops above bottom nav */}
-            <div className="flex-1 overflow-y-auto no-scrollbar px-4 pt-5 pb-24">
+            {/* Scrollable content — pb-24 to clear bottom nav */}
+            <div className="flex-1 overflow-y-auto no-scrollbar px-4 pt-5 pb-28">
                 {step === 1 && <Step1Service services={services} onNext={handleNext} />}
                 {step === 2 && <Step2DateTime onNext={handleNext} />}
                 {step === 3 && <Step3Phone />}
