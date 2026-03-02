@@ -22,6 +22,13 @@ html,
 body {
   -webkit-tap-highlight-color: transparent;
   overscroll-behavior-y: none;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
 }
 
 /* Custom scrollbar hiding */

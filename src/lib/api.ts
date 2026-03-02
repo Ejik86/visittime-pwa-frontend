@@ -9,8 +9,14 @@ const MOCK_SERVICES: Service[] = [
 ];
 
 const MOCK_APPOINTMENTS: Appointment[] = [
-    { id: '101', serviceId: '1', serviceName: 'Стрижка', date: '2026-03-01', time: '14:00', status: 'upcoming' },
+    { id: '101', serviceId: '1', serviceName: 'Стрижка мужская', date: '2026-03-10', time: '14:00', status: 'upcoming', price: 800 },
+    { id: '102', serviceId: '2', serviceName: 'С переходом от нуля', date: '2026-03-15', time: '16:00', status: 'upcoming', price: 1200 },
+    { id: '103', serviceId: '5', serviceName: 'Стрижка + борода', date: '2026-02-15', time: '11:00', status: 'past', price: 1600 },
+    { id: '104', serviceId: '4', serviceName: 'Оформление бороды', date: '2026-01-22', time: '13:00', status: 'past', price: 600 },
 ];
+
+// In-memory store for mock state mutations
+let _appointments = [...MOCK_APPOINTMENTS];
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -49,6 +55,14 @@ export const api = {
 
     getAppointments: async (): Promise<Appointment[]> => {
         await delay(400);
-        return MOCK_APPOINTMENTS;
-    }
+        return [..._appointments];
+    },
+
+    cancelAppointment: async (id: string): Promise<{ success: boolean }> => {
+        await delay(500);
+        _appointments = _appointments.map(a =>
+            a.id === id ? { ...a, status: 'cancelled' as const, cancelledAt: new Date().toISOString() } : a
+        );
+        return { success: true };
+    },
 };

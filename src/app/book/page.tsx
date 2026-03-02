@@ -24,38 +24,38 @@ export default function BookPage() {
     const handleBack = () => setStep((s) => Math.max(s - 1, 1));
 
     return (
-        <div className="flex min-h-screen flex-col bg-[var(--color-bg)] pb-20">
-            {/* Brand Elegant Header */}
-            <div className="sticky top-0 z-50 flex h-16 items-center px-4 pt-2 pb-2 bg-[var(--color-bg)]/80 backdrop-blur-xl">
+        <div className="flex h-screen flex-col bg-[var(--color-bg)] overflow-hidden">
+            {/* Header */}
+            <div className="shrink-0 flex h-14 items-center px-4 bg-[var(--color-bg)]/90 backdrop-blur-xl border-b border-[var(--color-border)]">
                 {step > 1 ? (
                     <button
                         onClick={handleBack}
-                        className="flex h-10 w-10 items-center justify-center rounded-full text-[var(--color-muted)] transition-colors hover:bg-[var(--color-surface)] hover:text-white smooth-press"
+                        className="flex h-9 w-9 items-center justify-center rounded-full text-[var(--color-muted)] transition-colors hover:bg-[var(--color-surface)] hover:text-white smooth-press"
                     >
-                        <ChevronLeft className="h-6 w-6" />
+                        <ChevronLeft className="h-5 w-5" />
                     </button>
-                ) : <div className="w-10" />}
+                ) : <div className="w-9" />}
                 <div className="flex-1 flex flex-col items-center justify-center">
-                    <img src="/images/logo2.png" alt="Danila Master" className="h-6 object-contain mb-1 opacity-80" />
-                    <h1 className="text-center text-[10px] font-bold tracking-[0.2em] uppercase text-[var(--color-text)]">
+                    <img src="/images/logo2.png" alt="Данила Мастер" className="h-5 object-contain opacity-75 mb-0.5" />
+                    <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[var(--color-muted)]">
                         {step === 1 && "Услуга"}
                         {step === 2 && "Дата и Время"}
                         {step === 3 && "Контакты"}
-                    </h1>
+                    </span>
                 </div>
-                <div className="w-10" />
+                <div className="w-9" />
             </div>
 
-            {/* Thin Progress Bar */}
-            <div className="h-[2px] w-full bg-[var(--color-surface)] relative mt-2">
+            {/* Progress bar */}
+            <div className="shrink-0 h-[2px] w-full bg-[var(--color-surface)]">
                 <div
-                    className="absolute left-0 top-0 h-full bg-[var(--color-accent)] shadow-[0_0_10px_rgba(111,143,134,0.8)] transition-all duration-500 ease-out"
+                    className="h-full bg-[var(--color-accent)] transition-all duration-500 ease-out"
                     style={{ width: `${(step / 3) * 100}%` }}
                 />
             </div>
 
-            {/* Content */}
-            <div className="flex-1 px-6 pt-8">
+            {/* Scrollable content area — stops above bottom nav */}
+            <div className="flex-1 overflow-y-auto no-scrollbar px-4 pt-5 pb-24">
                 {step === 1 && <Step1Service services={services} onNext={handleNext} />}
                 {step === 2 && <Step2DateTime onNext={handleNext} />}
                 {step === 3 && <Step3Phone />}

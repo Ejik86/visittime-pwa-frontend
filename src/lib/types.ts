@@ -19,5 +19,7 @@ export interface Appointment {
     serviceName: string;
     date: string;
     time: string;
+    price?: number;
     status: 'upcoming' | 'past' | 'cancelled';
+    cancelledAt?: string;
 }

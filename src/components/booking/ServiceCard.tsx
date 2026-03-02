@@ -15,45 +15,51 @@ export function ServiceCard({ service, isSelected, isLoyal, onClick }: ServiceCa
         <div
             onClick={onClick}
             className={cn(
-                "flex cursor-pointer flex-col overflow-hidden rounded-xl transition-all duration-300 smooth-press text-left border",
+                "flex cursor-pointer flex-row items-center overflow-hidden rounded-xl transition-all duration-200 smooth-press border h-[90px]",
                 isSelected
-                    ? "bg-[var(--color-surface)] border-[var(--color-accent)] shadow-lg shadow-[var(--color-accent)]/5"
+                    ? "bg-[var(--color-surface)] border-[var(--color-accent)]"
                     : "bg-[var(--color-surface)] border-[var(--color-border)] hover:border-[var(--color-muted)]"
             )}
         >
-            <div className="flex">
-                {service.imageUrl && (
-                    <div className="w-1/3 min-h-[140px] relative shrink-0">
-                        <img
-                            src={service.imageUrl}
-                            alt={service.name}
-                            className="absolute inset-0 w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[var(--color-surface)] opacity-90" />
-                    </div>
-                )}
-
-                <div className="flex-1 p-5 lg:p-6 flex flex-col justify-center">
-                    <div className="flex justify-between items-start mb-2">
-                        <h3 className="font-medium text-[var(--color-text)] text-lg tracking-tight leading-tight">{service.name}</h3>
-                        <span className="font-medium text-[var(--color-text)] whitespace-nowrap ml-3">{displayPrice} ₽</span>
-                    </div>
-
-                    {service.description && (
-                        <p className="text-[13px] text-[var(--color-muted)] font-light leading-relaxed mb-4">{service.description}</p>
-                    )}
-
-                    <div className="flex items-center gap-3 mt-auto">
-                        <span className="text-[11px] font-medium text-[var(--color-accent)] uppercase tracking-wider">
-                            {service.durationMinutes} мин
-                        </span>
-                        {isLoyal && (
-                            <span className="text-[9px] bg-[var(--color-accent)]/10 text-[var(--color-accent)] px-2 py-0.5 rounded-sm border border-[var(--color-accent)]/20 uppercase tracking-widest font-medium">
-                                Свой клиент
-                            </span>
-                        )}
-                    </div>
+            {/* Photo */}
+            {service.imageUrl && (
+                <div className="relative h-full w-[90px] shrink-0 overflow-hidden">
+                    <img
+                        src={service.imageUrl}
+                        alt={service.name}
+                        className="h-full w-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[var(--color-surface)]/80" />
                 </div>
+            )}
+
+            {/* Text */}
+            <div className="flex flex-1 flex-col justify-center px-4 gap-1 min-w-0">
+                <div className="flex items-baseline justify-between gap-2">
+                    <h3 className="font-medium text-[var(--color-text)] text-base tracking-tight truncate">
+                        {service.name}
+                    </h3>
+                    <span className="text-base font-medium text-[var(--color-text)] shrink-0">
+                        {displayPrice} ₽
+                    </span>
+                </div>
+
+                <div className="flex items-center gap-2">
+                    <span className="text-[11px] font-medium text-[var(--color-accent)] uppercase tracking-wider">
+                        {service.durationMinutes} мин
+                    </span>
+                    {service.description && (
+                        <span className="text-[12px] text-[var(--color-muted)] font-light truncate">
+                            · {service.description}
+                        </span>
+                    )}
+                </div>
+
+                {isLoyal && (
+                    <span className="text-[9px] self-start bg-[var(--color-accent)]/10 text-[var(--color-accent)] px-2 py-0.5 rounded-sm border border-[var(--color-accent)]/20 uppercase tracking-widest font-medium">
+                        Свой клиент
+                    </span>
+                )}
             </div>
         </div>
     );
